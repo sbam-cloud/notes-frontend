@@ -16,10 +16,13 @@ export default function Decrypt() {
   const [decryptedMessage, setDecryptedMessage] = useState<string | null>(null)
 
   async function decrypt(id: string, hash: string): Promise<void> {
-    const decryptUrl = new URL(`decrypt/${id}`, import.meta.env.VITE_API_ENDPOINT!).toString();
+    const decryptUrl = new URL(id, import.meta.env.VITE_API_ENDPOINT!).toString();
     const response = await fetch(decryptUrl, {
       method: 'POST',
       body: JSON.stringify({ secret: hash }),
+      headers: {
+        'Content-Type': 'application/json',
+      }
     });
     const data: DecryptResponse = await response.json();
     setDecryptedMessage(data.message);
