@@ -47,7 +47,7 @@ export default function Footer() {
         align='center'
         direction='row'
       >
-        <Text>&copy; 2022 Nicola Racco</Text>
+        <Text>Copyright &copy; 2022 Nicola Racco</Text>
         <Stack direction='row' spacing={6}>
           <SocialButton label='Github' href='https://github.com/sbam-tools/notes'>
             <FontAwesomeIcon icon={faGithub} />

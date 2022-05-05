@@ -1,7 +1,14 @@
 {
-  "name": "frontend",
+  "name": "sbam-notes-frontend",
+  "description": "SBAM Notes Frontend",
+  "version": "0.0.1",
+  "license": "MIT",
+  "author": {
+    "name": "Nicola Racco",
+    "email": "nicola.racco@gmail.com",
+    "url": "https://www.github.com/nicolaracco"
+  },
   "private": true,
-  "version": "0.0.0",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",

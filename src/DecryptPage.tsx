@@ -1,4 +1,4 @@
-import { Alert, AlertIcon, Box, FormControl, FormLabel, Link, Spinner, Stack, Textarea } from "@chakra-ui/react";
+import { Box, FormControl, FormLabel, Link, Spinner, Stack, Textarea } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { Link as ReactRouterLink, useParams } from "react-router-dom";
 import { InternalError, NotFoundError } from "./errors";
