@@ -1,6 +1,7 @@
 import { Box, FormControl, FormLabel, Link, Spinner, Stack, Textarea } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { Link as ReactRouterLink, useParams } from "react-router-dom";
+import LoadingSpinner from "./components/LoadingSpinner";
 import { InternalError, NotFoundError } from "./errors";
 
 type DecryptPageRouteParams = {
@@ -50,15 +51,7 @@ export default function DecryptPage() {
   return (
     <Box>
       {isLoading ? (
-        <Stack align='center' alignSelf='center'>
-          <Spinner
-            thickness='4px'
-            speed='0.65s'
-            emptyColor='gray.200'
-            color='blue.500'
-            size='xl'
-          />
-        </Stack>
+        <LoadingSpinner />
       ) : (
         decryptError ?
           renderError(decryptError)
