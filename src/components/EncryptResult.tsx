@@ -1,14 +1,16 @@
-import { Alert, Box, Button, Flex, FormControl, FormLabel, HStack, Input, Link, Tooltip } from "@chakra-ui/react";
+import { Alert, Box, Button, Flex, FormControl, FormLabel, HStack, Input, Link, Tab, TabList, TabPanel, TabPanels, Tabs, Tooltip } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { copyTextToClipboard } from "../utils";
+import { EncryptDetails } from "./EncryptForm";
 import HintsPanel from "./HintsPanel";
 
 export interface EncryptResultProps {
-  generatedUrl: string;
+  generatedDetails: EncryptDetails;
   onClearUrl: () => void;
 }
 
-export default function EncryptResult({ generatedUrl, onClearUrl }: EncryptResultProps) {
+export default function EncryptResult({ generatedDetails, onClearUrl }: EncryptResultProps) {
+  const fullGeneratedUrl = `${generatedDetails.url}#${generatedDetails.secret}`;
   const [urlCopiedToClipboard, setUrlCopiedToClipboard] = useState<boolean>(false);
 
   useEffect(() => {
@@ -38,15 +40,45 @@ export default function EncryptResult({ generatedUrl, onClearUrl }: EncryptResul
         <p>The message expires automatically after 7 days.</p>
       </HintsPanel>
       <Flex w='full' direction='column' mt={{ base: 5, md: 0 }}>
-        <FormControl id='generatedUrl'>
-          <FormLabel>Generated Link</FormLabel>
-          <HStack w='full'>
-            <Input readOnly value={generatedUrl} />
-            <Tooltip label="Link copied!" isOpen={urlCopiedToClipboard}>
-              <Button onClick={() => handleCopyToClipboard(generatedUrl)}>Copy</Button>
-            </Tooltip>
-          </HStack>
-        </FormControl>
+        <Tabs>
+          <TabList>
+            <Tab>Quick share</Tab>
+            <Tab>Paranoid mode</Tab>
+          </TabList>
+          <TabPanels>
+            <TabPanel>
+              <FormControl>
+                <FormLabel>Generated Link</FormLabel>
+                <HStack w='full'>
+                  <Input readOnly value={fullGeneratedUrl} />
+                  <Tooltip label="Link copied!" isOpen={urlCopiedToClipboard}>
+                    <Button onClick={() => handleCopyToClipboard(fullGeneratedUrl)}>Copy</Button>
+                  </Tooltip>
+                </HStack>
+              </FormControl>
+            </TabPanel>
+            <TabPanel>
+              <FormControl>
+                <FormLabel>1. Share this URL using one communication channel (e.g. email)</FormLabel>
+                <HStack w='full'>
+                  <Input readOnly value={generatedDetails.url} />
+                  <Tooltip label="Link copied!" isOpen={urlCopiedToClipboard}>
+                    <Button onClick={() => handleCopyToClipboard(generatedDetails.url)}>Copy</Button>
+                  </Tooltip>
+                </HStack>
+              </FormControl>
+              <FormControl>
+                <FormLabel>2. Share the message secret via a different communication channel (e.g. chat)</FormLabel>
+                <HStack w='full'>
+                  <Input readOnly value={generatedDetails.secret} type='password'/>
+                  <Tooltip label="Link copied!" isOpen={urlCopiedToClipboard}>
+                    <Button onClick={() => handleCopyToClipboard(generatedDetails.secret)}>Copy</Button>
+                  </Tooltip>
+                </HStack>
+              </FormControl>
+            </TabPanel>
+          </TabPanels>
+        </Tabs>
         <HStack justify='flex-end' paddingTop={2} w='full' h={100}>
           <Link onClick={handleReset}>Share a new note!</Link>
         </HStack>

@@ -1,19 +1,19 @@
 import { useState } from "react";
-import EncryptForm from "./components/EncryptForm";
+import EncryptForm, { EncryptDetails } from "./components/EncryptForm";
 import EncryptResult from "./components/EncryptResult";
 import { InternalError } from "./errors";
 
 export default function EncryptPage() {
-  const [generatedUrl, setGeneratedUrl] = useState<string | null>(null);
+  const [generatedDetails, setGeneratedDetails] = useState<EncryptDetails | null>(null);
   const [encryptError, setEncryptError] = useState<number | null>(null);
 
-  const handleReset = () => { setGeneratedUrl(null) };
+  const handleReset = () => { setGeneratedDetails(null) };
 
   if (encryptError) {
     return <InternalError />;
   }
-  if (generatedUrl) {
-    return <EncryptResult generatedUrl={generatedUrl} onClearUrl={handleReset} />;
+  if (generatedDetails) {
+    return <EncryptResult generatedDetails={generatedDetails} onClearUrl={handleReset} />;
   }
-  return <EncryptForm setGeneratedUrl={setGeneratedUrl} onEncryptError={setEncryptError} />;
+  return <EncryptForm onEncryptComplete={setGeneratedDetails} onEncryptError={setEncryptError} />;
 }

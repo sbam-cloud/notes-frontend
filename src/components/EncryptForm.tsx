@@ -3,7 +3,17 @@ import { useFormik } from "formik";
 import HintsPanel from "./HintsPanel";
 import LoadingSpinner from "./LoadingSpinner";
 
-export default function EncryptForm({ onEncryptError, setGeneratedUrl }: { onEncryptError: (status: number) => void, setGeneratedUrl: (url: string | null) => void }) {
+export interface EncryptDetails {
+  url: string;
+  secret: string;
+}
+
+export interface EncryptFormProps {
+  onEncryptError: (status: number) => void;
+  onEncryptComplete: (details: EncryptDetails) => void;
+}
+
+export default function EncryptForm({ onEncryptError, onEncryptComplete: setGeneratedUrl }: EncryptFormProps) {
   const formik = useFormik({
     initialValues: {
       message: '',
@@ -21,7 +31,10 @@ export default function EncryptForm({ onEncryptError, setGeneratedUrl }: { onEnc
         onEncryptError(response.status);
       } else {
         const data = await response.json();
-        setGeneratedUrl(`${window.location.origin}/${data.id}#${data.secret}`);
+        setGeneratedUrl({
+          url: `${window.location.origin}/${data.id}`,
+          secret: data.secret,
+        });
       }
     }
   });
