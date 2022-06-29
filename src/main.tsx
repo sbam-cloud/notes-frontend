@@ -3,7 +3,7 @@ import React from 'react'
 import { createRoot } from 'react-dom/client'
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import App from './App';
-import DecryptPage from './DecryptPage';
+import DetailPage from './DetailPage';
 import EncryptPage from './EncryptPage'
 import theme from './theme';
 
@@ -17,7 +17,7 @@ root.render(
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<EncryptPage />} />
-            <Route path="/:id" element={<DecryptPage />} />
+            <Route path="/:id" element={<DetailPage />} />
           </Routes>
         </BrowserRouter>
       </App>
